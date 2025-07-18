@@ -6,7 +6,7 @@ import 'package:mileage_calculator/models/user_model.dart';
 
 class AuthProvider extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
   final Logger _logger = Logger();
 
   User? _firebaseUser;
@@ -35,7 +35,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> fetchUserData(String uid) async {
-    final doc = await _db.collection("users").doc(uid).get();
+    final doc = await _fireStore.collection("users").doc(uid).get();
     _userData = doc.data();
   }
 
@@ -63,7 +63,7 @@ class AuthProvider extends ChangeNotifier {
         lastName: lastName,
       );
 
-      await _db.collection("users").doc(uid).set({
+      await _fireStore.collection("users").doc(uid).set({
         ...newUser.toMap(),
         "timestamp": FieldValue.serverTimestamp(),
       });
