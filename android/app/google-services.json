@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "793301519044",
+    "project_id": "mileage-calculator-32711",
+    "storage_bucket": "mileage-calculator-32711.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:793301519044:android:18055a4e71ff724be3d791",
+        "android_client_info": {
+          "package_name": "com.example.mileage_calculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "793301519044-ukq7masjparehklrps0uphhqj5n1b16h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy-TRfhlEVRFmjiIXRkuo9ND5eC2SmBTo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "793301519044-ukq7masjparehklrps0uphhqj5n1b16h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
