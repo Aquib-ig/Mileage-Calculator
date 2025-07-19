@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
             brightness == Brightness.dark);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Mileage Calculator')),
+      appBar: AppBar(title: const Text("Mileage Calculator")),
 
       drawer: Drawer(
         child: ListView(
@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SwitchListTile(
               secondary: Icon(isDark ? Icons.dark_mode : Icons.light_mode),
-              title: Text(isDark ? 'Dark Mode' : 'Light Mode'),
+              title: Text(isDark ? "Dark Mode" : "Light Mode"),
               value: isDark,
               onChanged: (value) {
                 themeProvider.toggleTheme(value);
@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ListTile(
               leading: const Icon(Icons.logout),
-              title: const Text('Logout'),
+              title: const Text("Logout"),
               onTap: () async {
                 await authProvider.signOut();
                 if (!mounted) return;
@@ -83,8 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.calculate), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
+          BottomNavigationBarItem(icon: Icon(Icons.calculate), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.history), label: "History"),
         ],
       ),
     );

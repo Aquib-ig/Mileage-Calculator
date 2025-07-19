@@ -22,9 +22,9 @@ class MileageHistoryScreen extends StatelessWidget {
       appBar: AppBar(title: const Text("Mileage History")),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
-            .collection('users')
+            .collection("users")
             .doc(user.uid)
-            .collection('mileage_records')
+            .collection("mileage_records")
             .orderBy('createdAt', descending: true)
             .snapshots(),
         builder: (context, snapshot) {
@@ -44,11 +44,11 @@ class MileageHistoryScreen extends StatelessWidget {
               final data = doc.data() as Map<String, dynamic>;
 
               final record = MileageModel.fromMap(data);
-              final date = (data['createdAt'] as Timestamp?)?.toDate();
+              final date = (data["createdAt"] as Timestamp?)?.toDate();
 
               final formattedDate = date != null
-                  ? DateFormat('dd MMM yyyy, hh:mm a').format(date)
-                  : 'Unknown Date';
+                  ? DateFormat("dd MMM yyyy, hh:mm a").format(date)
+                  : "Unknown Date";
 
               return Container(
                 margin: const EdgeInsets.symmetric(vertical: 4),
@@ -69,7 +69,7 @@ class MileageHistoryScreen extends StatelessWidget {
                     ),
                   ),
                   title: Text(
-                    "${record.vehicleType} — ${record.mileage.toStringAsFixed(2)} km/l",
+                    "${record.vehicleType} — ${record.mileage.toStringAsFixed(2)} km/lr",
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,

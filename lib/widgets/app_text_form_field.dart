@@ -18,7 +18,8 @@ class AppTextFormField extends StatelessWidget {
     this.suffixIcon,
     required this.keyboardType,
     required this.validator,
-    required this.obscureText, required this.lableText,
+    required this.obscureText,
+    required this.lableText,
   });
 
   @override

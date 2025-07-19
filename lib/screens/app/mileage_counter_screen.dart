@@ -17,7 +17,7 @@ class _MileageCounterScreenState extends State<MileageCounterScreen> {
   final TextEditingController _distanceController = TextEditingController();
   final TextEditingController _fuelController = TextEditingController();
 
-  String _selectedVehicle = 'Car';
+  String _selectedVehicle = "Car";
   double? _calculatedMileage;
   bool _isLoading = false;
 
@@ -33,8 +33,8 @@ class _MileageCounterScreenState extends State<MileageCounterScreen> {
             children: [
               DropdownButtonFormField<String>(
                 value: _selectedVehicle,
-                items: ['Car', 'Bike', 'Bus']
-                    .map((v) => DropdownMenuItem(value: v, child: Text(v)))
+                items: ["Car", "Bike", "Bus"]
+                    .map((val) => DropdownMenuItem(value: val, child: Text(val)))
                     .toList(),
                 onChanged: (val) => setState(() => _selectedVehicle = val!),
                 decoration: const InputDecoration(
