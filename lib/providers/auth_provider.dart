@@ -105,4 +105,20 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+Future<void> forgotPassword(String email) async {
+  try {
+    _isLoading = true;
+    notifyListeners();
+
+    await _auth.sendPasswordResetEmail(email: email);
+  } on FirebaseAuthException catch (e) {
+    _logger.e("Forgot password error: ${e.code} - ${e.message}");
+    throw Exception("Failed to send reset email: ${e.message}");
+  } finally {
+    _isLoading = false;
+    notifyListeners();
+  }
+}
+
 }

@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:mileage_calculator/providers/auth_provider.dart';
 import 'package:mileage_calculator/screens/app/home_screen.dart';
 import 'package:mileage_calculator/widgets/app_button.dart';
@@ -25,34 +24,49 @@ class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = true;
   bool _isConfirmPasswordVisible = true;
-
   @override
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthProvider>();
 
     return Scaffold(
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            double maxWidth = constraints.maxWidth > 600
-                ? 500
-                : double.infinity;
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          double maxWidth = constraints.maxWidth > 600 ? 500 : double.infinity;
+          double maxHeight = MediaQuery.of(context).size.height;
 
-            return SingleChildScrollView(
-              child: Center(
-                child: Container(
-                  width: maxWidth,
-                  padding: const EdgeInsets.all(18.0),
-                  child: Form(
+          return SingleChildScrollView(
+            child: Container(
+              width: maxWidth,
+              height: maxHeight,
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Column(
+                children: [
+                  const Spacer(), // pushes form towards center
+                  Form(
                     key: _formKey,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          "Hello! Register to get started",
-                          style: TextStyle(
-                            fontSize: 42,
-                            fontWeight: FontWeight.bold,
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Create an account",
+                            style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Register to get you started!",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                         SizedBox(height: 40),
@@ -62,13 +76,12 @@ class _SignupScreenState extends State<SignupScreen> {
                               child: AppTextFormField(
                                 controller: _firstNameController,
                                 hintText: "First name",
+                                lableText: "First Name",
                                 keyboardType: TextInputType.text,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return "First name cannot be empty";
-                                  }
-                                  return null;
-                                },
+                                validator: (value) =>
+                                    value == null || value.isEmpty
+                                    ? "First name cannot be empty"
+                                    : null,
                                 obscureText: false,
                               ),
                             ),
@@ -77,13 +90,12 @@ class _SignupScreenState extends State<SignupScreen> {
                               child: AppTextFormField(
                                 controller: _lastNameController,
                                 hintText: "Last name",
+                                lableText: "Last Name",
                                 keyboardType: TextInputType.text,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return "Last name cannot be empty";
-                                  }
-                                  return null;
-                                },
+                                validator: (value) =>
+                                    value == null || value.isEmpty
+                                    ? "Last name cannot be empty"
+                                    : null,
                                 obscureText: false,
                               ),
                             ),
@@ -94,6 +106,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           hintText: "Email",
+                          lableText: "Email",
                           prefixIcon: Icon(Icons.email_outlined),
                           obscureText: false,
                           validator: (value) {
@@ -110,13 +123,15 @@ class _SignupScreenState extends State<SignupScreen> {
                         SizedBox(height: 20),
                         AppTextFormField(
                           controller: _passwordController,
-                          hintText: "Password",
+                          hintText: "Enter your password",
+                          lableText: "Password",
                           prefixIcon: Icon(Icons.lock_outline),
+
                           suffixIcon: IconButton(
                             icon: Icon(
                               _isPasswordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                                  ? Icons.visibility_off_outlined
+                                  : Icons.visibility_outlined,
                             ),
                             onPressed: () {
                               setState(() {
@@ -136,13 +151,14 @@ class _SignupScreenState extends State<SignupScreen> {
                         SizedBox(height: 20),
                         AppTextFormField(
                           controller: _confirmPasswordController,
-                          hintText: "Confirm password",
+                          hintText: "Enter Confirm password",
+                          lableText: "Confirm Password",
                           prefixIcon: Icon(Icons.lock_outline),
                           suffixIcon: IconButton(
                             icon: Icon(
                               _isConfirmPasswordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                                  ? Icons.visibility_off_outlined
+                                  : Icons.visibility_outlined,
                             ),
                             onPressed: () {
                               setState(() {
@@ -162,25 +178,10 @@ class _SignupScreenState extends State<SignupScreen> {
                             return null;
                           },
                         ),
-                        SizedBox(height: 20),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: GestureDetector(
-                            onTap: () {
-                              log("forgot button tapped!");
-                            },
-                            child: Text(
-                              "Forgot Password?",
-                              style: TextStyle(
-                                color: Color(0xffee3a57),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ),
+                        const SizedBox(height: 12),
 
-                        SizedBox(height: 30),
+                        const SizedBox(height: 20),
+
                         AppButton(
                           onTap: authProvider.isLoading
                               ? null
@@ -201,10 +202,10 @@ class _SignupScreenState extends State<SignupScreen> {
                                       _firstNameController.clear();
                                       _lastNameController.clear();
 
-                                      Navigator.push(
+                                      Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => HomeScreen(),
+                                          builder: (_) => HomeScreen(),
                                         ),
                                       );
                                     } catch (e) {
@@ -213,53 +214,79 @@ class _SignupScreenState extends State<SignupScreen> {
                                   }
                                 },
                           child: authProvider.isLoading
-                              ? SizedBox(
+                              ? const SizedBox(
                                   height: 25,
                                   width: 25,
                                   child: CircularProgressIndicator(
-                                    strokeWidth: 3,  
+                                    strokeWidth: 3,
                                     color: Colors.white,
                                   ),
                                 )
-                              : Center(
-                                  child: const Text(
-                                    "Sign Up",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                              : Text(
+                                  "Sign Up",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                         ),
-                        SizedBox(height: 30),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Or Sign in with",
-                            style: TextStyle(fontSize: 20),
-                          ),
+                        const SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Divider(
+                                thickness: 1,
+                                color: Colors.grey.shade400,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0,
+                              ),
+                              child: Text(
+                                "or",
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ),
+                            Expanded(
+                              child: Divider(
+                                thickness: 1,
+                                color: Colors.grey.shade400,
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(height: 10),
-                        SignInButton(Buttons.GoogleDark, onPressed: () {}),
 
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              "Don't have an account? ",
-                              style: TextStyle(fontSize: 16),
-                            ),
                             GestureDetector(
-                              onTap: () {
-                                log("Sign up tapped");
-                              },
-                              child: Text(
-                                " Sign up",
-                                style: TextStyle(
-                                  color: Color(0xffee3a57),
-                                  fontSize: 16,
+                              onTap: () {},
+                              child: CircleAvatar(
+                                backgroundColor: Theme.of(
+                                  context,
+                                ).colorScheme.surface,
+                                radius: 20,
+                                child: Image.asset(
+                                  height: 20,
+                                  "assets/images/google_logo.png",
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 20),
+                            GestureDetector(
+                              onTap: () {},
+                              child: CircleAvatar(
+                                radius: 20,
+                                backgroundColor: Theme.of(
+                                  context,
+                                ).colorScheme.surface,
+                                child: Image.asset(
+                                  height: 24,
+                                  "assets/images/facebook_logo.png",
                                 ),
                               ),
                             ),
@@ -268,11 +295,31 @@ class _SignupScreenState extends State<SignupScreen> {
                       ],
                     ),
                   ),
-                ),
+                  Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Already have an account? "),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text(
+                          "Sign In",
+                          style: TextStyle(
+                            color: Colors.blueAccent,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                ],
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:mileage_calculator/firebase_options.dart';
 import 'package:mileage_calculator/providers/auth_provider.dart';
 import 'package:mileage_calculator/providers/theme_provider.dart';
 import 'package:mileage_calculator/screens/auth/signin_screen.dart';
+import 'package:mileage_calculator/screens/auth/signup_screen.dart';
 import 'package:mileage_calculator/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
