@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mileage_calculator/firebase_options.dart';
 import 'package:mileage_calculator/providers/auth_provider.dart';
+import 'package:mileage_calculator/providers/mileage_provider.dart';
 import 'package:mileage_calculator/providers/theme_provider.dart';
 import 'package:mileage_calculator/screens/app/home_screen.dart';
 import 'package:mileage_calculator/screens/auth/auth_gate.dart';
@@ -19,6 +20,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => MileageProvider()),
       ],
       child: MyApp(),
     ),

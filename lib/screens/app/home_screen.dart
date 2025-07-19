@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mileage_calculator/providers/auth_provider.dart';
 import 'package:mileage_calculator/providers/theme_provider.dart';
-import 'package:mileage_calculator/screens/app/history_tracking_screen.dart';
+import 'package:mileage_calculator/screens/app/mileage_history_screen.dart';
 import 'package:mileage_calculator/screens/app/mileage_counter_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -15,10 +15,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = const [
-    MileageCounterScreen(),
-    HistoryTrackingScreen(),
-  ];
+  final List<Widget> _pages = [MileageCounterScreen(), MileageHistoryScreen()];
 
   late AuthProvider authProvider;
 

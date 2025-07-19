@@ -41,6 +41,7 @@ dependencies:
   provider: ^6.1.5
   logger: ^2.6.0
   google_sign_in: ^7.1.1
+  fl_chart: ^1.0.0
 
 dev_dependencies:
   flutter_test:
