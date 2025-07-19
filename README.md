@@ -3,7 +3,7 @@
 Setup Instructions
 1) Clone the repository
 
-git clone https://github.com/your-username/mileage-calculator.git
+git clone (https://github.com/Aquib-ig/Mileage-Calculator.git)
 cd mileage-calculator
 
 2) Install dependencies
