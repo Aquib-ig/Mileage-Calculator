@@ -17,29 +17,28 @@ class AuthProvider extends ChangeNotifier {
   Map<String, dynamic>? get userData => _userData;
   bool get isLoading => _isLoading;
 
-  AuthProvider() {
-    _auth.authStateChanges().listen(onAuthStateChanged);
-  }
+Future<void> fetchUserData() async {
+  if (_firebaseUser == null) return;
 
-  Future<void> onAuthStateChanged(User? user) async {
-    _firebaseUser = user;
-    if (user != null) {
-      _isLoading = true;
-      notifyListeners();
-      await fetchUserData(user.uid);
-    } else {
-      _userData = null;
+  try {
+    _isLoading = true;
+    notifyListeners();
+
+    final doc = await _fireStore.collection('users').doc(_firebaseUser!.uid).get();
+
+    if (doc.exists) {
+      _userData = doc.data();
     }
+  } catch (e) {
+    _logger.e("Failed to fetch user data: $e");
+  } finally {
     _isLoading = false;
     notifyListeners();
   }
+}
 
-  Future<void> fetchUserData(String uid) async {
-    final doc = await _fireStore.collection("users").doc(uid).get();
-    _userData = doc.data();
-  }
 
-  Future<void> signUp(
+  Future<UserCredential> signUp(
     String email,
     String password,
     String firstName,
@@ -67,6 +66,8 @@ class AuthProvider extends ChangeNotifier {
         ...newUser.toMap(),
         "timestamp": FieldValue.serverTimestamp(),
       });
+
+      return credential; // return the UserCredential
     } on FirebaseAuthException catch (e) {
       _logger.e("Firebase error: ${e.code} - ${e.message}");
       throw Exception("Failed to register: ${e.message}");
@@ -76,12 +77,20 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> signIn(String email, String password) async {
+  Future<UserCredential> signIn(String email, String password) async {
     try {
       _isLoading = true;
       notifyListeners();
 
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      final credential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      _firebaseUser = credential.user;
+
+
+      return credential; // return the UserCredential
     } on FirebaseAuthException catch (e) {
       _logger.e("Firebase error: ${e.code} - ${e.message}");
       throw Exception("Failed to login: ${e.message}");
@@ -106,19 +115,18 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-Future<void> forgotPassword(String email) async {
-  try {
-    _isLoading = true;
-    notifyListeners();
+  Future<void> forgotPassword(String email) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
 
-    await _auth.sendPasswordResetEmail(email: email);
-  } on FirebaseAuthException catch (e) {
-    _logger.e("Forgot password error: ${e.code} - ${e.message}");
-    throw Exception("Failed to send reset email: ${e.message}");
-  } finally {
-    _isLoading = false;
-    notifyListeners();
+      await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      _logger.e("Forgot password error: ${e.code} - ${e.message}");
+      throw Exception("Failed to send reset email: ${e.message}");
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
-}
-
 }

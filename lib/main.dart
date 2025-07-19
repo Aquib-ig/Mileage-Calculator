@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:mileage_calculator/firebase_options.dart';
 import 'package:mileage_calculator/providers/auth_provider.dart';
 import 'package:mileage_calculator/providers/theme_provider.dart';
+import 'package:mileage_calculator/screens/app/home_screen.dart';
+import 'package:mileage_calculator/screens/auth/auth_gate.dart';
+import 'package:mileage_calculator/screens/auth/forget_password_screen.dart';
 import 'package:mileage_calculator/screens/auth/signin_screen.dart';
 import 'package:mileage_calculator/screens/auth/signup_screen.dart';
 import 'package:mileage_calculator/themes/app_theme.dart';
@@ -33,7 +36,13 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       initialRoute: "/",
-      routes: {"/": (context) => SigninScreen()},
+      routes: {
+        "/": (context) => AuthGate(),
+        "/signin": (context) => SigninScreen(),
+        "/signup": (context) => SignupScreen(),
+        "/forgetPassword": (context) => ForgetPasswordScreen(),
+        "/home": (context) => HomeScreen(),
+      },
     );
   }
 }

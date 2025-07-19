@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mileage_calculator/providers/auth_provider.dart';
+import 'package:mileage_calculator/utils/show_app_snackbar.dart';
 import 'package:mileage_calculator/widgets/app_button.dart';
 import 'package:mileage_calculator/widgets/app_text_form_field.dart';
+import 'package:provider/provider.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});
@@ -15,6 +18,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = context.watch<AuthProvider>();
+
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -56,8 +61,34 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     "Submit",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  onTap: () {},
+                  onTap: () async {
+                    if (_formKey.currentState!.validate()) {
+                      try {
+                        await Provider.of<AuthProvider>(
+                          context,
+                          listen: false,
+                        ).forgotPassword(_emailController.text.trim());
+
+                        showAppSnackBar(
+                          context,
+                          message:
+                              "Password reset link sent!, Please check your email",
+                          backgroundColor: Colors.green,
+                        );
+
+                        _emailController.clear();
+                        Navigator.pop(context);
+                      } catch (e) {
+                        showAppSnackBar(
+                          context,
+                          message: "Failed to reset the link ${e.toString()}",
+                          backgroundColor: Colors.red,
+                        );
+                      }
+                    }
+                  },
                 ),
+
                 SizedBox(height: 16),
 
                 GestureDetector(

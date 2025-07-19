@@ -1,10 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:mileage_calculator/providers/auth_provider.dart';
-import 'package:mileage_calculator/screens/app/home_screen.dart';
-import 'package:mileage_calculator/screens/auth/forget_password_screen.dart';
-import 'package:mileage_calculator/screens/auth/signup_screen.dart';
+import 'package:mileage_calculator/utils/show_app_snackbar.dart';
 import 'package:mileage_calculator/widgets/app_button.dart';
 import 'package:mileage_calculator/widgets/app_text_form_field.dart';
 import 'package:provider/provider.dart';
@@ -117,13 +113,7 @@ class _SigninScreenState extends State<SigninScreen> {
                           alignment: Alignment.centerRight,
                           child: GestureDetector(
                             onTap: () {
-                              
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => ForgetPasswordScreen(),
-                                ),
-                              );
+                              Navigator.pushNamed(context, "/forgetPassword");
                             },
                             child: Text(
                               "Forgot Password?",
@@ -149,14 +139,23 @@ class _SigninScreenState extends State<SigninScreen> {
 
                                       _emailController.clear();
                                       _passwordController.clear();
-                                      Navigator.pushReplacement(
+                                      Navigator.pushReplacementNamed(
                                         context,
-                                        MaterialPageRoute(
-                                          builder: (_) => HomeScreen(),
-                                        ),
+                                        "/home",
+                                      );
+
+                                      showAppSnackBar(
+                                        context,
+                                        message: "Login successfull!",
+                                        backgroundColor: Colors.green,
                                       );
                                     } catch (e) {
-                                      log("Login failed: $e");
+                                      showAppSnackBar(
+                                        context,
+                                        message:
+                                            "Failed to login${e.toString()}",
+                                        backgroundColor: Colors.red,
+                                      );
                                     }
                                   }
                                 },
@@ -249,10 +248,7 @@ class _SigninScreenState extends State<SigninScreen> {
                       Text("Don’t have an account? "),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => SignupScreen()),
-                          );
+                          Navigator.pushNamed(context, "/signup");
                         },
                         child: const Text(
                           "Sign Up",

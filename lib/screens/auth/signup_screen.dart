@@ -1,8 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:mileage_calculator/providers/auth_provider.dart';
-import 'package:mileage_calculator/screens/app/home_screen.dart';
+import 'package:mileage_calculator/utils/show_app_snackbar.dart';
 import 'package:mileage_calculator/widgets/app_button.dart';
 import 'package:mileage_calculator/widgets/app_text_form_field.dart';
 import 'package:provider/provider.dart';
@@ -194,7 +192,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                         _firstNameController.text.trim(),
                                         _lastNameController.text.trim(),
                                       );
-                                      log("Signup Successful!!");
 
                                       _emailController.clear();
                                       _passwordController.clear();
@@ -202,14 +199,23 @@ class _SignupScreenState extends State<SignupScreen> {
                                       _firstNameController.clear();
                                       _lastNameController.clear();
 
-                                      Navigator.pushReplacement(
+                                      Navigator.pushReplacementNamed(
                                         context,
-                                        MaterialPageRoute(
-                                          builder: (_) => HomeScreen(),
-                                        ),
+                                        "/home",
+                                      );
+
+                                      showAppSnackBar(
+                                        context,
+                                        message: "Login successfull!",
+                                        backgroundColor: Colors.green,
                                       );
                                     } catch (e) {
-                                      log("Signup failed: $e");
+                                      showAppSnackBar(
+                                        context,
+                                        message:
+                                            "Failed to register a user ${e.toString()}",
+                                        backgroundColor: Colors.red,
+                                      );
                                     }
                                   }
                                 },
