@@ -1,16 +1,36 @@
 # mileage_calculator
 
-A new Flutter project.
+Setup Instructions
+1) Clone the repository
 
-## Getting Started
+git clone https://github.com/your-username/mileage-calculator.git
+cd mileage-calculator
 
-This project is a starting point for a Flutter application.
+2) Install dependencies
 
-A few resources to get you started if this is your first Flutter project:
+flutter pub get
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+3️)Configure Firebase
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Create a Firebase project at Firebase Console.
+
+Enable Authentication (e.g., Email/Password or Anonymous).
+
+Enable Cloud Firestore.
+
+Download the google-services.json (for Android) and/or GoogleService-Info.plist (for iOS) and place them:
+
+Android: android/app/google-services.json
+
+iOS: ios/Runner/GoogleService-Info.plist
+
+4️) Run the app
+
+Tools & Packages Used
+
+firebase_core — Firebase initialization
+firebase_auth — Authentication
+cloud_firestore — Firestore database
+intl — Date formatting
+provider — State management
+logger — Logging
